@@ -1,16 +1,13 @@
 package com.exe.springJdbcTemplate;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 public class CustomDAO2 {
 
@@ -22,13 +19,32 @@ public class CustomDAO2 {
 	}
 	
 	
+	private NamedParameterJdbcTemplate namedJdbcTemplate;
+	
+	public void setNamedJdbcTemplate(NamedParameterJdbcTemplate namedJdbcTemplate) {
+		this.namedJdbcTemplate = namedJdbcTemplate;
+	}
+	
+	
 	public void insertData(CustomDTO dto) {
 		
 		StringBuilder sql= new StringBuilder();
+		/*
 		sql.append("insert into custom (id,name,age) values (?,?,?)");
 		
 		jdbcTemplate.update(sql.toString(),dto.getId(),dto.getName(),dto.getAge());
-			
+		*/
+		
+		//namedJdbcTemplate
+		sql.append("insert into custom (id,name,age) values(:id,:name,:age)");
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("id", dto.getId());
+		params.addValue("name", dto.getName());
+		params.addValue("age", dto.getAge());
+		
+		namedJdbcTemplate.update(sql.toString(),params);
+		
 	}
 	
 	public List<CustomDTO> getList(){

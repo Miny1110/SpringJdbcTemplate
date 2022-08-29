@@ -11,20 +11,22 @@ public class CustomMain {
 		GenericXmlApplicationContext context = 
 				new GenericXmlApplicationContext("app-context.xml");
 		
+		/**CustomDAO와 CustomDAO2로 하는 방법은 다르다
+		 * 필요한 부분 빼고는 주석처리하기
+		 * 안하면 insert하고 update하고 delete 다함*/
 		CustomDAO2 dao = (CustomDAO2)context.getBean("customDAO2");
 
 		CustomDTO dto;
 		
 		//insert
-		
 		dto = new CustomDTO();
-		dto.setId(666);
-		dto.setName("홍길동");
+		dto.setId(777);
+		dto.setName("둘리");
 		dto.setAge(41);
 		
 		dao.insertData(dto);
 		System.out.println("insert 완료");
-		
+/*		
 		//update
 		dto = new CustomDTO();
 		dto.setId(555);
@@ -44,7 +46,6 @@ public class CustomMain {
 					dto.getId(),dto.getName(),dto.getAge());
 		}
 		System.out.println("OneSelect 완료");
-	
 		//list
 		List<CustomDTO> lists = dao.getList();
 		for(CustomDTO dto1 : lists) {
@@ -52,6 +53,7 @@ public class CustomMain {
 					dto1.getId(),dto1.getName(),dto1.getAge());
 		}
 		System.out.println("select 완료");
+ */	
 	}
 
 }
